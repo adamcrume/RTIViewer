@@ -6,7 +6,6 @@ import java.io.BufferedInputStream;
 import java.io.DataInput;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
 import java.net.URL;
 
 public class RTI {
@@ -34,7 +33,6 @@ public class RTI {
 	// rtiheight*rtiwidth*bands*terms                                                                                                                                                   
 	// (where terms = (order*order), for other variables check the comments above)                                                                                                      
 	float[] loadHSH(String fn) throws IOException {
-//		InputStream in = getClass().getClassLoader().getResourceAsStream(fn);
 		InputStream in = new URL(fn).openStream();
 		try {
 			BufferedInputStream infile = new BufferedInputStream(in);

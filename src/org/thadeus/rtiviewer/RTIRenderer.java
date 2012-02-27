@@ -184,10 +184,6 @@ public class RTIRenderer implements Renderer {
 			check();
 	        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textures[i]);
 			check();
-	        //GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, mipmap_level, internal_format, tex_width, tex_height, border, GLES20.GL_RGB, GLES20.GL_FLOAT, ByteBuffer.wrap(data3));
-			//GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, mipmap_level, internal_format, tex_width, tex_height, border, GLES20.GL_RGB, GLES20.GL_BYTE, ByteBuffer.wrap(data3));
-	        //GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, mipmap_level, internal_format, 128, 128, border, GLES20.GL_RGB, GLES20.GL_UNSIGNED_BYTE, ByteBuffer.wrap(data3));
-			//GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, mipmap_level, internal_format, tex_width, tex_height, border, GLES20.GL_RGB, GLES20.GL_UNSIGNED_BYTE, ByteBuffer.wrap(data3));
 			
 	        ByteBuffer vbb = ByteBuffer.allocateDirect(
 	                // (# of coordinate values * 4 bytes per float)
