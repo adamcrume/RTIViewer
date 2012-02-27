@@ -1,4 +1,4 @@
-package org.thadeus.coin;
+package org.thadeus.rtiviewer;
 
 import static java.lang.Math.PI;
 import static java.lang.Math.acos;
@@ -9,26 +9,27 @@ import static java.lang.Math.pow;
 import static java.lang.Math.sin;
 import static java.lang.Math.sqrt;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.view.MotionEvent;
 
-public class CoinSurfaceView extends GLSurfaceView {
+public class RTISurfaceView extends GLSurfaceView {
 	private final float TOUCH_SCALE_FACTOR = 180.0f / 320;
-	private CoinRenderer mRenderer;
+	private RTIRenderer mRenderer;
 	private float mPreviousX;
 	private float mPreviousY;
 
-	public CoinSurfaceView(Context context) {
+	public RTISurfaceView(Context context, RTI rti) {
 		super(context);
 
 		// Create an OpenGL ES 2.0 context.
 		setEGLContextClientVersion(2);
 
 		// Set the Renderer for drawing on the GLSurfaceView
-		mRenderer = new CoinRenderer();
+		mRenderer = new RTIRenderer(rti);
 		setRenderer(mRenderer);
 
         // Render the view only when there is a change
@@ -124,11 +125,11 @@ public class CoinSurfaceView extends GLSurfaceView {
         weights[2]  = (float) (sqrt(3/(2*PI)) *  (-1 + 2*cos(theta)));
         weights[3]  = (float) (sqrt(6/PI)     *  (sqrt(cos(theta) - cos(theta)*cos(theta))*sin(phi)));
 
-//        weights[4]  = (float) (sqrt(30/PI)    *  (cos(2*phi)*(-cos(theta) + cos(theta)*cos(theta))));
-//        weights[5]  = (float) (sqrt(30/PI)    *  (cos(phi)*(-1 + 2*cos(theta))*sqrt(cos(theta) - cos(theta)*cos(theta))));
-//        weights[6]  = (float) (sqrt(5/(2*PI)) *  (1 - 6*cos(theta) + 6*cos(theta)*cos(theta)));
-//        weights[7]  = (float) (sqrt(30/PI)    *  ((-1 + 2*cos(theta))*sqrt(cos(theta) - cos(theta)*cos(theta))*sin(phi)));
-//        weights[8]  = (float) (sqrt(30/PI)    *  ((-cos(theta) + cos(theta)*cos(theta))*sin(2*phi)));
+        weights[4]  = (float) (sqrt(30/PI)    *  (cos(2*phi)*(-cos(theta) + cos(theta)*cos(theta))));
+        weights[5]  = (float) (sqrt(30/PI)    *  (cos(phi)*(-1 + 2*cos(theta))*sqrt(cos(theta) - cos(theta)*cos(theta))));
+        weights[6]  = (float) (sqrt(5/(2*PI)) *  (1 - 6*cos(theta) + 6*cos(theta)*cos(theta)));
+        weights[7]  = (float) (sqrt(30/PI)    *  ((-1 + 2*cos(theta))*sqrt(cos(theta) - cos(theta)*cos(theta))*sin(phi)));
+        weights[8]  = (float) (sqrt(30/PI)    *  ((-cos(theta) + cos(theta)*cos(theta))*sin(2*phi)));
 
 //        if(order > 3) {
 //            weights[9]  = (float) (2*sqrt(35/PI)  *  cos(3*phi)*pow(cos(theta) - cos(theta)*cos(theta),(3/2)));
@@ -144,7 +145,6 @@ public class CoinSurfaceView extends GLSurfaceView {
 //            }
 //        }
 
-        System.out.println("weights = "+Arrays.toString(weights));
             requestRender();
        }
 }

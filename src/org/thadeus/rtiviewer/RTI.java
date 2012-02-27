@@ -1,4 +1,4 @@
-package org.thadeus.coin;
+package org.thadeus.rtiviewer;
 
 import static java.lang.Math.sqrt;
 
@@ -6,6 +6,8 @@ import java.io.BufferedInputStream;
 import java.io.DataInput;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URL;
 
 public class RTI {
 	// RTI file info : These variables are initialize in the loadHSH function                                                                                                           
@@ -13,6 +15,8 @@ public class RTI {
 	// bands - Number of color channels in the image, usually 3                                                                                                                         
 	// order - The order of the RTI reflectance model. The actual number of coefficients (i.e. terms) = order * order                                                                   
 	int rtiwidth, rtiheight, bands, order;
+
+	float[] hshpixels;
 
 	//	// The global light position, used in the renderImageHSH() method. Normalize before calling the renderImageHSH()                                                                    
 	//	float lx, ly, lz;
@@ -30,10 +34,10 @@ public class RTI {
 	// rtiheight*rtiwidth*bands*terms                                                                                                                                                   
 	// (where terms = (order*order), for other variables check the comments above)                                                                                                      
 	float[] loadHSH(String fn) throws IOException {
-		InputStream in = getClass().getClassLoader().getResourceAsStream(fn);
+//		InputStream in = getClass().getClassLoader().getResourceAsStream(fn);
+		InputStream in = new URL(fn).openStream();
 		try {
 			BufferedInputStream infile = new BufferedInputStream(in);
-			float[] hshpixels = null;
 			float[] scale = new float[30];
 			float[] bias = new float[30];
 			//	        //g_mode=MODE_HEMISPHERICAL;                                                                                                                                                
@@ -50,14 +54,14 @@ public class RTI {
 
 			int file_type, terms, basis_type, element_size;
 			float dummy_scale, dummy_bias;
-			String line = readLine(infile);
+			String line = readLine(infile).trim();
 			file_type = Integer.parseInt(line);
-			line = readLine(infile);
+			line = readLine(infile).trim();
 			String[] data = line.split("\\s+");
 			rtiwidth = Integer.parseInt(data[0]);
 			rtiheight = Integer.parseInt(data[1]);
 			bands = Integer.parseInt(data[2]);
-			line = readLine(infile);
+			line = readLine(infile).trim();
 			data = line.split("\\s+");
 			terms = Integer.parseInt(data[0]);
 			basis_type = Integer.parseInt(data[1]);

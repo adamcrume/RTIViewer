@@ -1,6 +1,5 @@
-package org.thadeus.coin;
+package org.thadeus.rtiviewer;
 
-import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
@@ -12,7 +11,7 @@ import javax.microedition.khronos.opengles.GL10;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView.Renderer;
 
-public class CoinRenderer implements Renderer {
+public class RTIRenderer implements Renderer {
 	private static final int FLOAT_SIZE_BYTES = 4;
 
 	private static final int NTERMS = 9;
@@ -76,6 +75,12 @@ public class CoinRenderer implements Renderer {
 
 	private int rtiwidth;
 
+	private RTI rti;
+
+	public RTIRenderer(RTI rti) {
+		this.rti = rti;
+	}
+
 	private void initShapes() {
 		float afVerticesFull[] = { -1, -1, -1,
 				1, -1, -1,
@@ -135,13 +140,7 @@ public class CoinRenderer implements Renderer {
 	    int internal_format = GLES20.GL_RGB; // internal format opengl stores the image as, we want to use 32-bit floating point
 		GLES20.glGenTextures(NTERMS, textures, 0);
 		check();
-		float[] allData;
-		RTI rti=new RTI();
-		try {
-			allData = rti.loadHSH("org/thadeus/coin/coin.rti");
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+		float[] allData = rti.hshpixels;
 		rtiheight = rti.rtiheight;
 		rtiwidth = rti.rtiwidth;
 		//FloatBuffer pixelBuffer = FloatBuffer.allocateDirect(tex_width * tex_height * 3).order(ByteOrder.nativeOrder());

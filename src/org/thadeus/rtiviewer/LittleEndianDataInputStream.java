@@ -1,4 +1,4 @@
-package org.thadeus.coin;
+package org.thadeus.rtiviewer;
 import java.io.DataInput;
 import java.io.DataInputStream;
 import java.io.IOException;
