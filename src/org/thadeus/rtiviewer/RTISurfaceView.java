@@ -7,6 +7,10 @@ import static java.lang.Math.cos;
 import static java.lang.Math.min;
 import static java.lang.Math.sin;
 import static java.lang.Math.sqrt;
+
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
+
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.view.MotionEvent;
@@ -21,27 +25,30 @@ public class RTISurfaceView extends GLSurfaceView {
 		setEGLContextClientVersion(2);
 
 		// Set the Renderer for drawing on the GLSurfaceView
-		mRenderer = new RTIRenderer(rti);
+        mRenderer = new RTIRenderer(rti) {
+            @Override
+            public void onSurfaceCreated(GL10 unused, EGLConfig config) {
+                super.onSurfaceCreated(unused, config);
+                // Displays a default rendering rather than a black screen when the view loads
+                updatePosition(getWidth() / 2, getHeight() / 2);
+            }
+        };
 		setRenderer(mRenderer);
 
         // Render the view only when there is a change
         setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 	}
-	
+
     @Override 
     public boolean onTouchEvent(MotionEvent e) {
         switch (e.getAction()) {
             case MotionEvent.ACTION_MOVE:
-            	updatePosition(e);
+			updatePosition(e.getX(), e.getY());
         }
         return true;
     }
     
-    private void updatePosition(MotionEvent e) {
-        float x, y;
-        x = e.getX();
-        y = e.getY();
-
+    private void updatePosition(float x, float y) {
         float midx = (float)getWidth()/2.0f;
         float midy = (float)getHeight()/2.0f;
         float radius = min(midx,midy);
