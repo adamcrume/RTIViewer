@@ -1,0 +1,8 @@
+RTIViewer
+
+This is a program to display Reflectance Transformation Imaging (RTI) files on 
+Android devices.  These are images which allow the user to interactively change 
+the lighting direction.
+
+For more information about RTI, please visit 
+http://culturalheritageimaging.org/Technologies/RTI/index.html
