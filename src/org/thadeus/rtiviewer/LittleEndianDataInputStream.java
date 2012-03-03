@@ -1,3 +1,8 @@
+/*
+  This code was originally written by Peter Franza and found at:
+  http://www.peterfranza.com/2008/09/26/little-endian-input-stream/
+ */
+
 package org.thadeus.rtiviewer;
 import java.io.DataInput;
 import java.io.DataInputStream;
